@@ -1,0 +1,56 @@
+Experiments with the Crosswire Sword API library.
+To get the library and the Python bindings compiled on Linux, you basically need the following steps:
+
+# For wxPython on Mint
+# sudo apt install libjpeg-dev libtiff5-dev libnotify-dev libgtk2.0-dev libgtk-3-dev libsdl1.2-dev libgstreamer-plugins-base1.0-dev libwebkit2gtk-4.0-dev freeglut3 freeglut3-dev  
+# sudo apt-get install python3-distutils python3-distutils-extra python3-apt libpython3.7-dev 
+# sudo pip3 install python-config 
+# sudo pip3 install wxpython  
+
+# Prerequisite for Sword is SWIG which in turn needs PCRE
+# sudo apt install build-essential autotools-dev pkg-config libz-dev libclucene-dev libicu-dev libcurl4-gnutls-dev libtool m4 automake bison
+
+# First we need to download and compile PCRE2. 
+# Download and unzip from here: https://github.com/PCRE2Project/pcre2/releases  
+# cd into the unzipped dir and use the normal Linux build cycle:
+# ./configure 
+# make 
+# sudo make install 
+
+# In some environments I used sudo also for ./configure and make because of error messages with file rights
+
+# For SWIG, download the tar file, build and install it. 
+# https://sourceforge.net/projects/swig/files/swig/swig-4.0.2/swig-4.0.2.tar.gz/download  
+# ./autogen.sh 
+# ./configure 
+# make 
+# sudo make install 
+
+# download and unzip http://crosswire.org/ftpmirror/pub/sword/source/v1.9/sword-1.9.0.tar.gz
+# ./autogen.sh 
+# ./configure 
+# make 
+# sudo make install 
+
+# Now to compile the Python bindings in Sword... 
+# From the Sword base directory where the .tar.gz file was extracted, 
+# cd bindings/swig/package 
+# libtoolize --force 
+# ./autogen.sh 
+# ./configure 
+# make pythonswig 
+
+# At this point I made some changes to ...bindings/swig/package/Makefile for Python3
+# Line 931 change $(PYTHON) to python3
+# Line 944 ff change command to subprocess, has_key() to __contains__() and iteritems() to items()
+# Altogether 5 lines changed.
+# make python_make 
+
+# sudo make install did not work properly, so I manually copied the build results
+# sudo cp /home/michael/Downloads/sword-1.9.0/lib/.libs/libsword* /lib 
+# sudo cp /home/michael/Downloads/sword-1.9.0/bindings/swig/package/python/build/lib.linux-x86_64-3.10/_Sword.cpython-310-x86_64-linux-gnu.so /usr/lib/python3/dist-packages 
+
+# I also managed to compile this on a Raspberry Pi 4 / Raspbian Bullseye
+# There I copied _Sword.cpython-39-arm-linux-gnueabihf.so from ...Python/build/ to /lib/python3/dist-packages
+
+# Have fun!
