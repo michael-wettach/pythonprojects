@@ -1,0 +1,9 @@
+Experiments with the Raspberry Pi Zero.
+
+Even the Zero 1, though it has a relatively slow processor, can run a full linux installation.
+Keep in mind that using the graphical desktop is not much fun; command line is preferable.
+I have found that I quite like the command line editor Micro and can recommend it,
+especially working through SSH in a terminal session from another computer.
+
+The Zero 2 is a different story; it can work quite well with a low-weight X desktop.
+
