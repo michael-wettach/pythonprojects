@@ -152,6 +152,20 @@ def getSearchText(modname, search_term, scope = '', output = '', oformat = OF_PL
 
 # To actually execute the example calls below you need some installed bibles/dictionaries/commentaries.
 # You can them install via command line or just install Xiphos and use the module manager to download.
+# If you have difficulties to install via the Xiphos module manager, you can also go to
+# http://ftp.xiphos.org/sword/zip  
+# https://www.crosswire.org/ftpmirror/pub/sword/packages/rawzip  
+# download what you need, unzip and copy to /usr/share/sword or to ~/.sword  
+
+# To get started with the API I found the following pages useful:
+# http://www.crosswire.org/sword/develop/swordapi/apiprimer.jsp  
+# http://www.crosswire.org/sword/apiref  
+# and of course: "Use the source, Luke!" look in: …/sword/src/modules/swmodule.cpp 
+# https://wiki.crosswire.org/DevTools:Code_Examples  
+# https://metacpan.org/pod/Sword  
+# https://github.com/zefanja/swordjs  
+# https://cpp.hotexamples.com/de/examples/-/SWModule/-/cpp-swmodule-class-examples.html  
+
 if __name__ == "__main__":
     print(getSearchText('Vines', 'delight'))
     print(getSearchText('StrongsHebrew', '8173'))
