@@ -1,6 +1,8 @@
 #! /usr/bin/python
-# rename photo image files according to Exif data
-# found on the Internet and added option to synchronize the time data from several cameras
+# Rename photo image files according to Exif data
+# There are loads of Python image renaming tools on the internet. 
+# This one I found at https://gist.github.com/wh13371/475e5845b427254283e7
+# and added an option to synchronize the time data from several cameras
 # see comments in line 85-88
 
 import sys, datetime, os, time
