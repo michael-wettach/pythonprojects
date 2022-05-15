@@ -88,3 +88,18 @@ After this you can retry build and install
 # sudo ./setup.py install 
 
 To test this you need a Python mididings script, you will find one here in this folder.
+
+Some ideas to take this even further:
+* Let a midi file play via alsaplay while mididings patches are still running.
+* Send midi data from a Pi Pico MIDI keyboard (see PiPico) and process it.
+
+In principle this is possible. 
+For example we can route midi player output to a second mididings input port:
+# aplaymidi -p 129:1 a.mid
+
+First experiments showed that we probably need to do a port split in mididings
+and take care to avoid conflicts when 2 streams play on the same midi channel.
+
+* Send MIDI data that represents an accompaniment pattern, say in key C major
+* Process this and transpose it to the key that is currently being played 
+* Together with the Pico MIDI controller keyboard we would have an automatic accompaniment machine.
