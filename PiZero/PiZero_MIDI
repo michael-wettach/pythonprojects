@@ -1,0 +1,90 @@
+I have 2 MIDI capable keyboards, a large 88-key Yamaha P105 and a smaller Casio CT-X 3000.
+Both do not have a full historical MIDI interface (5-pin DIN), but only a USB-to-host interface.
+So to connect these two they need to be connected to the same MIDI host (i.e. a computer).
+
+I found that buying a MIDI host controller with limited functions can cost you from 80$ / 80€ upwards,
+whereas a Raspberry Zero with much more flexibility could be bought (at that time) for about 15€.
+Even with additional components such as extra USB ports you are still saving a lot.
+Also there are lots of projects for using the Pi as a MIDI hub on the web, so I tried out some.
+
+For the beginning you just need an installed Raspbian without graphical desktop
+and some extra USB ports, either with a USB port hat like these
+https://eckstein-shop.de/WaveShare-USB-HUB-BOX-for-Raspberry-Pi-Zero
+https://www.amazon.de/gp/product/B07PMCCF1W
+
+or with an external USB hub like the one in this cheap kit (I do not get referral fees):
+https://www.amazon.de/gp/product/B09N6NGWL1 
+
+Sadly, I found that none of the USB hubs I had in my drawer were recognized by the Pi Zero. 
+So if you are buying one take care that Raspi compatibility is part of the package.
+
+As a first step connect your MIDI instruments and use ALSA (pre-installed with Raspbian).
+This will show the ALSA ports to which your devices got connected:
+# aconnect -i -o 
+Lets's assume the large keyboard (which I want to play) is on port 20,
+the small one (which I want to produce the sound) is on port 24.
+This will connect the ouput of one keyboard to the input of the other:
+# aconnect 20:0 24:0 
+
+Now I wanted to send some MIDI data programmatically, for example a sound program change.
+The easiest way to achieve this is to install the "sendmidi" command line tool:
+# cd ~ 
+# wget https://github.com/gbevin/SendMIDI/releases/download/1.1.0/sendmidi-linux-arm-1.1.0.tar.gz  
+# tar –xf sendmidi-linux-arm-1.1.0.tar.gz 
+# sudo cp ./sendmidi-linux-arm-1.1.0/sendmidi /usr/bin/sendmidi 
+
+The sendmidi commands are explained here: https://github.com/gbevin/SendMIDI
+The following command will choose guitar sound 24 on bank 32 on my CASIO:
+# sendmidi dev "CASIO USB-MIDI" cc 0 32 pc 24
+
+Of course the Raspberry as a full-blown computer can do much more. 
+
+There is a MIDI event processing package MIDIDINGS available on the web.
+Alas, MIDIDINGS does not have an ARM build, so we need to compile it ourselves.
+
+First install the prerequisites PYTHON-ALSA and BOOST
+# sudo apt install alsa-base jackd libasound2-dev libjack-dev libsmf-dev 
+# sudo apt install python3-alsaaudio python3-pyalsa
+
+While compiling the BOOST library, I found that with only 512 MB main memory the build will fail.
+So it is a good idea to create a 2 GB swap partition on your SD card before trying this.
+# wget https://sourceforge.net/projects/boost/files/boost/1.78.0/boost_1_78_0.tar.gz/download 
+# tar xzvf boost_1_78_0.tar.gz 
+# cd boost_1_78_0/ 
+
+There is adapted source code and a description for Python 3 on Github: 
+https://github.com/stefets/live-config/wiki/How-I-build-Mididings-(Python-3.10.x)  
+https://github.com/stefets/live-config/wiki/How-I-build-Boost-1.78   
+ 
+However I chose the easy route here and compiled with Python 2.
+# ./bootstrap.sh --prefix=/usr --with-libraries=python --with-libraries=thread 
+# ./b2 stage -j4 threading=multi link=shared 
+# sudo ./b2 install threading=multi link=shared 
+
+The last two requirements for MIDIDINGS are glib and decorator:
+# sudo apt install glib2.0
+# curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py 
+# python get-pip.py 
+# python –m pip install decorator 
+
+Now to build mididings
+# wget https://das.nasophon.de/download/mididings-20120419.tar.gz  
+# # or for Python 3 use https://github.com/stefets/mididings/tree/build-2021-python3  
+# tar xzvf mididings 
+# cd mididings-2120419 
+# ./setup.py build [--disable-jack-midi] [--disable-alsa-seq] [--enable-smf] 
+
+At this point I got an error /usr/bin/ld: cannot find –lboost_python
+The build has a more complicated name and an easy fix is to create a symbolic link.
+Search and locate the "libboost_pythonXX.so" file in the usr/lib directory 
+XX will match the python version with which you configured boost while building. 
+The file probably will be named as libboost_python27.so 
+ 
+...and then create a symbolic link : 
+sudo ln -s "libboost_pythonXX.so" libboost_python.so 
+
+After this you can retry build and install
+# ./setup.py build [--disable-jack-midi] [--disable-alsa-seq] [--enable-smf] 
+# sudo ./setup.py install 
+
+To test this you need a Python mididings script, you will find one here in this folder.
