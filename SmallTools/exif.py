@@ -2,9 +2,9 @@
 # Rename photo image files according to Exif data
 # There are loads of Python image renaming tools on the internet. 
 # This one I found at https://gist.github.com/wh13371/475e5845b427254283e7
-# and added an option to synchronize the time data from several cameras
-# see comments in line 85-88
-
+# and added an option to synchronize the time data from several cameras.
+# See time_offset in line 61-64 and comments in line 87ff
+# I also included the camera model in the image name, so we know who took the picture.
 import sys, datetime, os, time
 # # for <PIL> on Python 2.6 => "pip install Pillow" - for Python 2.7 <PIL> part of core modules
 from PIL import Image 
