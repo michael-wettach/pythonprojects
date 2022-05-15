@@ -150,6 +150,8 @@ def getSearchText(modname, search_term, scope = '', output = '', oformat = OF_PL
     return restext    
 
 
+# To actually execute the example calls below you need some installed bibles/dictionaries/commentaries.
+# You can them install via command line or just install Xiphos and use the module manager to download.
 if __name__ == "__main__":
     print(getSearchText('Vines', 'delight'))
     print(getSearchText('StrongsHebrew', '8173'))
