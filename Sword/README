@@ -48,7 +48,9 @@ To get the library and the Python bindings compiled on Linux, you basically need
 
 # sudo make install did not work properly, so I manually copied the build results
 # sudo cp /home/michael/Downloads/sword-1.9.0/lib/.libs/libsword* /lib 
+# sudo cp /home/michael/Downloads/sword-1.9.0/bindings/swig/package/python/Sword.py /usr/lib/python3/dist-packages 
 # sudo cp /home/michael/Downloads/sword-1.9.0/bindings/swig/package/python/build/lib.linux-x86_64-3.10/_Sword.cpython-310-x86_64-linux-gnu.so /usr/lib/python3/dist-packages 
+# The exact name is dependent on your Python version, for Python 3.8 it would be linux-x86_64-3.8 and cpython-38.
 
 # I also managed to compile this on a Raspberry Pi 4 / Raspbian Bullseye
 # There I copied _Sword.cpython-39-arm-linux-gnueabihf.so from ...Python/build/ to /lib/python3/dist-packages
