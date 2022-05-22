@@ -1,0 +1,24 @@
+There is a Python library fauxmo on Github that allows the Pi Zero to be recognized as an Alexa compatible device.
+https://github.com/n8henrie/fauxmo
+
+This German web page has instructions on how to install it:
+https://itler.net/raspberry-pi-mit-alexa-amazon-echo-steuern-anleitung/ 
+
+But the fauxmo docs also have such instructions.
+
+In my example use case, I want to control a motor-driven slatted frame.
+There are 2 motors with 4 directions:
+* move top section (head) up or down
+* move bottom section (legs/feet) up or down
+
+So I had to create 4 switches which can be turned on and off with Alexa.
+I adapted the necessary configuration files mentioned in the article  
+and added some code to manage status information in the form of files.
+* file exists means the corresponding switch status is "on"
+* file does not exist means the corresponding switch is "off".
+
+This allows for easy status checking wih a small batch script.
+The script has to return 0 for "device is on" and <>0 for "device is off".
+
+I created a service as suggested in the fauxmo docs 
+and used systemd to automatically start the Alexa client after reboot.
