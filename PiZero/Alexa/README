@@ -12,6 +12,15 @@ There are 2 motors with 4 directions:
 * move bottom section (legs/feet) up or down
 
 So I had to create 4 switches which can be turned on and off with Alexa.
+The switches are implemented with an inexpensive array of 4 relay switches,
+which can be switched by applying a current from one of the Raspi's GPIO outputs.
+See image "Wiring.jpg" to get an impression.
+
+The relay documentation was not very clear on how it works.
+This particular device has 3 connectors for each relay.
+Without current from the Raspi the middle connector connects with the left one,
+with current from the Raspi it switches and connects to the right one.
+
 I adapted the necessary configuration files mentioned in the article  
 and added some code to manage status information in the form of files.
 * file exists means the corresponding switch status is "on"
