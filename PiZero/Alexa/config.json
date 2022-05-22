@@ -1,0 +1,41 @@
+{
+    "FAUXMO": {
+        "ip_address": "auto"
+    },
+    "PLUGINS": {
+        "CommandLinePlugin": {
+            "path": "/home/pi/commandlineplugin.py",
+            "DEVICES": [
+                {
+                    "name": "Kopf_hoch",
+                    "port": 49910,
+                    "on_cmd": "python3 /home/pi/bett.py kopf_hoch",
+                    "off_cmd": "python3 /home/pi/bett.py stop",
+                    "state_cmd": "/home/pi/get_state.sh kh"
+                },
+                {
+                    "name": "Kopf_runter",
+                    "port": 49911,
+                    "on_cmd": "python3 /home/pi/bett.py kopf_runter",
+                    "off_cmd": "python3 /home/pi/bett.py stop",
+                    "state_cmd": "/home/pi/get_state.sh kr"
+                },
+                {
+                    "name": "Beine_hoch",
+                    "port": 49912,
+                    "on_cmd": "python3 /home/pi/bett.py beine_hoch",
+                    "off_cmd": "python3 /home/pi/bett.py stop",
+                    "state_cmd": "/home/pi/get_state.sh bh"
+                },
+                {
+                    "name": "Beine_runter",
+                    "port": 49913,
+                    "on_cmd": "python3 /home/pi/bett.py beine_runter",
+                    "off_cmd": "python3 /home/pi/bett.py stop",
+                    "state_cmd": "/home/pi/get_state.sh br"
+                }
+            ]
+        }
+    }
+}
+

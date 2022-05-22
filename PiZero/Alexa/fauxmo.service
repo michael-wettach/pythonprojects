@@ -1,0 +1,17 @@
+[Unit]
+Description=Fauxmo
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/pyenv/versions/3.6.1/bin/
+# Fix the paths below:
+ExecStart=/opt/pyenv/versions/3.6.1/bin/python3.6 -m fauxmo.cli -c /home/pi/config.json -v
+Restart=on-failure
+RestartSec=10s
+User=pi
+
+[Install]
+WantedBy=multi-user.target
+
