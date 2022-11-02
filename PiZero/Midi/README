@@ -4,3 +4,4 @@ Using the Pi Zero as a MIDI hub has some advantages to a notebook:
 * it can run headless
 
 The Python samples show example configurations.
+Read PiZero_Midi file for installation instructions.
